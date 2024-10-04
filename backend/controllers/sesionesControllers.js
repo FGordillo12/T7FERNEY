@@ -28,5 +28,3 @@ const sesionesControllers = {
 };
 
 module.exports = sesionesControllers;
-
-  
