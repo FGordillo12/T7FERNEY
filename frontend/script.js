@@ -158,7 +158,7 @@ function guardarCurso() {
       redirect: "follow"
   };
 
-  fetch("http://localhost:6500/cursos", requestOptions) // Cambia el puerto si es necesario
+  fetch("http://localhost:8888/.netlify/functions/cursos", requestOptions) // Cambia el puerto si es necesario
       .then((response) => response.text())
       .then((result) => console.log(result))
       .catch((error) => console.error(error));

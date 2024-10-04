@@ -1,11 +1,17 @@
-const express = require('express');
-const cors = require("cors");
-const cursosRoutes = require('../routes/cursosRouters'); // Ajusta la ruta según sea necesario
+const db = require('./db'); // Asegúrate de tener la conexión a la base de datos configurada
 
-const app = express();
-app.use(cors());
-app.use(express.json());
+// Función para agregar un nuevo curso
+const agregarCurso = (req, res) => {
+    const { codigodelcurso, nombredelcurso } = req.body;
 
-app.use("/cursos", cursosRoutes);
+    const query = 'INSERT INTO cursos (codigodelcurso, nombredelcurso) VALUES (?, ?)';
+    db.query(query, [codigodelcurso, nombredelcurso], (err, result) => {
 
-module.exports = app; // Exporta la aplicación para usarla en Netlify
+        if (err) {
+            return res.status(500).json({ error: err.message });
+        }
+        res.status(201).json({ message: 'Curso agregado correctamente', cursoId: result.insertId });
+    });
+};
+
+module.exports = { agregarCurso };

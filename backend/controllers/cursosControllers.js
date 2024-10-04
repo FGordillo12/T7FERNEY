@@ -45,27 +45,27 @@ class CursosControllers{
             res.status(500).send(err.message);
         }
     }
-    ingresar(req,res){
-        try{
-            const myJSON = JSON.stringify(req.body);
-            console.log ("la información que llega es " + myJSON );
+    
+    
 
-            const {dni,nombre} = req.body;
-            //console.log ("el dni que llega es de " + dni);
-
-            db.query('INSERT INTO estudiantes (codigodelcurso ,nombredelcurso) VALUES (?, ?);',
-            [dni,nombre],(err,rows) => {
-                if(err) {
-                    res.status (400).send(err.message);
-                }else{
-                    res.status(201).json({id: rows.insertId});
+    ingresar(req, res) {
+        try {
+            const { codigodelcurso, nombredelcurso } = req.body;
+    
+            db.query('INSERT INTO cursos (codigodelcurso, nombredelcurso) VALUES (?, ?);',
+                [codigodelcurso, nombredelcurso], (err, rows) => {
+                    if (err) {
+                        res.status(400).send(err.message);
+                    } else {
+                        res.status(201).json({ id: rows.insertId });
+                    }
                 }
-            });
-
-        }catch (err){
+            );
+        } catch (err) {
             res.status(500).send(err.message);
         }
     }
+    
 
     consultarDetalle(req,res){
         const {id} = req.params;

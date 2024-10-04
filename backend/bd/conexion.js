@@ -6,14 +6,12 @@ const db = mysql.createConnection ({
     database: "sistema_asistencia",
 });
 
-db.connect((err)=> {
+db.connect((err) => {
     if (err) {
-        console.log("Conexion no Establecida")
-        throw err;
-    }else{
-        console.log ("BD Mysql Conectado");
+        console.error('Error connecting to the database:', err);
+        return;
     }
-  
+    console.log('Connected to the MySQL database.');
 });
 
 module.exports = db;
