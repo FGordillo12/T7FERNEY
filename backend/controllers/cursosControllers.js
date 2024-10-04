@@ -6,19 +6,21 @@ class CursosControllers{
 
     }
 
-    consultar(req,res){
-        try{
-            db.query('SELECT  * FROM cursos',
-            [],(err,rows) => {
-                if(err) {
-                    res.status (400).send(err.message);
+    consultar(req, res) {
+        try {
+            db.query('SELECT * FROM cursos', [], (err, rows) => {
+                if (err) {
+                    res.status(400).send(err.message);
+                } else {
+                    res.status(200).json(rows); // Devuelve la lista de cursos
                 }
-                res.status(200).json(rows);
             });
-        }catch (err){
+        } catch (err) {
             res.status(500).send(err.message);
         }
     }
+    
+    
 
     actualizar(req, res) {
         const { codigodelcurso } = req.params;  // Get dni from URL

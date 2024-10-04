@@ -181,16 +181,18 @@ function cargarCursos(resultado) {
 }
 
 function listarCursos() {
-  event.preventDefault();
   const requestOptions = {
       method: "GET",
       redirect: "follow"
   };
-  fetch("http://localhost:6500/cursos", requestOptions) // Cambia el puerto si es necesario
+  fetch("http://localhost:8888/.netlify/functions/cursos", requestOptions) // Ajusta la URL aquí
       .then((response) => response.text())
-      .then((result) => cargarCursos(result))
+      .then((result) => cargar(result))
       .catch((error) => console.error(error));
 }
+
+
+
 
 function respuestaActualizarCurso(resultado) {
   document.getElementById("rta").innerHTML = resultado;
