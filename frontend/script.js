@@ -138,3 +138,53 @@ function eliminar_estudiante(){
     .catch((error) =>
       console.error(error));
 }
+
+
+
+function guardarSesion(){
+  const myHeaders = new Headers();
+  myHeaders.append("Content-Type", "application/json");
+  event.preventDefault();
+
+  let rawSesion = JSON.stringify({
+    "codigodelcurso": document.getElementById("adicionarCurso").value,
+    "fecha": document.getElementById("fecha").value,
+    "horadeinicio": document.getElementById("idhi").value,
+    "horafinal": document.getElementById("dnihf").value,
+  });
+
+  let requestOptions = {
+    method: "POST",
+    headers: myHeaders,
+    body: rawSesion,
+    redirect: "follow"
+  };
+
+  fetch("http://localhost:8888/.netlify/functions/sesiones", requestOptions)
+    .then((response) => response.json())
+    .then((result) => console.log(result))
+    .catch((error) => console.error(error));
+}
+
+function listarSesiones(){
+  event.preventDefault();
+
+  const requestOptions = {
+    method: "GET",
+    redirect: "follow"
+  };
+
+  fetch("http://localhost:8888/.netlify/functions/sesiones", requestOptions)
+    .then((response) => response.json())
+    .then((result) => cargarSesiones(result))
+    .catch((error) => console.error(error));
+}
+
+function cargarSesiones(sesiones){
+  let salida = "";
+  sesiones.forEach(sesion => {
+    salida += `<br>ID: ${sesion.numerodesecuencia} - Curso: ${sesion.codigodelcurso} - Fecha: ${sesion.fecha} - Inicio: ${sesion.horadeinicio} - Final: ${sesion.horafinal}<br>`;
+  });
+  document.getElementById("rta").innerHTML = salida;
+}
+
